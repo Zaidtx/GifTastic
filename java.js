@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     function createButtons(){
         $(".animal-buttons").empty();
-        for(let i=0; i < animals.length; i++) {
+        for (let i=0; i < animals.length; i++) {
             const button = $("<button>");
             button.addClass("animalButton");
             button.attr("data-type", animals[i]);
@@ -19,7 +19,7 @@ $(document).ready(function(){
         // url with key
     
 
-        const queryUrl = `https://api.giphy.com/v1/gifs/search?q=${name}&api_key=lce25bMPzWCIbAFmwtBgFtub26pRDd58&limit=10`;
+        const queryUrl = `https://api.giphy.com/v1/gifs/search?q=${name}&api_key=lce25bMPzWCIbAFmwtBgFtub26pRDd58&limit=2`;
         $.ajax({
             url: queryUrl,
             method: "GET"
@@ -30,9 +30,29 @@ $(document).ready(function(){
             console.log(response);
 
            
-            const animlas = response.data;
+            const results = response.data;
+            
+            for (let i = 0; i < results.length; i++) {
+
+                const animalDiv = $("div");
+
+                const p = $("<p>").text("Rating:" + results[i].rating);
+
+                const animalImage = $("<img>");
+
+                animalImage.attr("src", results[i].images.fixed_height.url);
+
+                animalDiv.append(p);
+                animalDiv.append(animalImage);
+
+                $(".animal").prepend(animalDiv);
+
+
+            }
 
             console.log(data);
+      
+
         })
     })
     $("#add-animal").on("click", function(event){
